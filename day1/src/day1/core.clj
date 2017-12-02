@@ -3,7 +3,7 @@
 
 (defn puzzle1
   [str]
-  (reduce +
+  (->> str
     (map-indexed
       (fn [idx itm]
         (let [length (count str)
@@ -11,12 +11,12 @@
               comparison-itm (nth str comparison-idx)]
           (if (= itm comparison-itm)
             (Character/getNumericValue itm)
-            0)))
-      str)))
+            0))))
+    (reduce +)))
 
 (defn puzzle2
   [str]
-  (reduce +
+  (->> str
     (map-indexed
       (fn [idx itm]
         (let [length (count str)
@@ -24,5 +24,5 @@
               comparison-itm (nth str comparison-idx)]
           (if (= itm comparison-itm)
             (Character/getNumericValue itm)
-            0)))
-      str)))
+            0))))
+    (reduce +)))
