@@ -22,10 +22,8 @@
     (not (apply distinct? row))
     (some true?
       (for [x row
-            y row]
-        (and
-          (not= x y)
-          (anagrams? x y))))))
+            y (remove #(= x %) row)]
+          (anagrams? x y)))))
 
 (defn puzzle2
   [input]
