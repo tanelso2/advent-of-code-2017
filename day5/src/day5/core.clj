@@ -25,7 +25,6 @@
     (inc x)
     (dec x)))
 
-
 (defn puzzle2
   [input]
   (loop [n 0
@@ -37,8 +36,3 @@
       (recur (+ n (nth instructions n))
              (update instructions n puzzle2-update-fn)
              (inc iterations)))))
-
-(defn -main
-  "I don't do a whole lot ... yet."
-  [& args]
-  (println "Hello, World!"))
