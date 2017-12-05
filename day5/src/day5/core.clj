@@ -11,14 +11,15 @@
   [input]
   (let [length (count input)]
     (loop [n 0
-           instructions input
+           instructions (transient input)
            iterations 0]
       (if (or (> 0 n)
               (<= length n))
         iterations
-        (recur (+ n (nth instructions n))
-               (update instructions n inc)
-               (inc iterations))))))
+        (let [jmp-distance (nth instructions n)]
+          (recur (+ n jmp-distance)
+                 (assoc! instructions n (inc jmp-distance))
+                 (inc iterations)))))))
 
 (defn puzzle2-update-fn
   [x]
@@ -30,11 +31,12 @@
   [input]
   (let [length (count input)]
     (loop [n 0
-           instructions input
+           instructions (transient input)
            iterations 0]
       (if (or (> 0 n)
               (<= length n))
         iterations
-        (recur (+ n (nth instructions n))
-               (update instructions n puzzle2-update-fn)
-               (inc iterations))))))
+        (let [jmp-distance (nth instructions n)]
+          (recur (+ n jmp-distance)
+                 (assoc! instructions n (puzzle2-update-fn jmp-distance))
+                 (inc iterations)))))))
