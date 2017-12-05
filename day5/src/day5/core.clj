@@ -9,15 +9,16 @@
 
 (defn puzzle1
   [input]
-  (loop [n 0
-         instructions input
-         iterations 0]
-    (if (or (> 0 n)
-            (<= (count instructions) n))
-      iterations
-      (recur (+ n (nth instructions n))
-             (update instructions n inc)
-             (inc iterations)))))
+  (let [length (count input)]
+    (loop [n 0
+           instructions input
+           iterations 0]
+      (if (or (> 0 n)
+              (<= length n))
+        iterations
+        (recur (+ n (nth instructions n))
+               (update instructions n inc)
+               (inc iterations))))))
 
 (defn puzzle2-update-fn
   [x]
@@ -27,12 +28,13 @@
 
 (defn puzzle2
   [input]
-  (loop [n 0
-         instructions input
-         iterations 0]
-    (if (or (> 0 n)
-            (<= (count instructions) n))
-      iterations
-      (recur (+ n (nth instructions n))
-             (update instructions n puzzle2-update-fn)
-             (inc iterations)))))
+  (let [length (count input)]
+    (loop [n 0
+           instructions input
+           iterations 0]
+      (if (or (> 0 n)
+              (<= length n))
+        iterations
+        (recur (+ n (nth instructions n))
+               (update instructions n puzzle2-update-fn)
+               (inc iterations))))))
