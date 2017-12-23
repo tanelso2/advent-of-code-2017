@@ -51,7 +51,9 @@
   [input-chan registers & args]
   (let [[x] args
         recieved-val (<!! input-chan)]
-    {:registers (assoc registers x recieved-val)}))
+    (if (nil? recieved-val)
+      {:registers registers :shut-it-down true}
+      {:registers (assoc registers x recieved-val)})))
 
 (defn parse-command-name
   [command-name input-chan output-chan]
@@ -78,7 +80,8 @@
       (if (= command-name "snd")
         (swap! num-vals-sent update process-num inc))
       (if (or (< next-pos 0)
-              (>= next-pos (count command-list)))
+              (>= next-pos (count command-list))
+              (contains? result-map :shut-it-down))
         result-map
         (recur next-pos
                (:registers result-map))))))
