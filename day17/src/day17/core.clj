@@ -23,13 +23,15 @@
 (defn puzzle2
   [number-of-steps]
   (letfn [(reduction-fn
-            [[curr-list curr-pos] next-val]
-            (insert-next curr-pos curr-list number-of-steps next-val))]
-    (->> (range 1 (inc 50000000))
-         (reduce reduction-fn ['(0) 0])
-         (first)
-         (drop-while #(not= 0 %))
-         (second))))
+            [[val-after-zero curr-pos list-length] next-val]
+            (let [split-pos (inc (mod (+ curr-pos number-of-steps) list-length))
+                  val-after-zero (if (= 1 split-pos)
+                                   next-val
+                                   val-after-zero)]
+              [val-after-zero split-pos (inc list-length)]))]
+    (->> (range 2 (inc 50000000))
+         (reduce reduction-fn [1 1 2])
+         (first))))
 
 (def puzzle-input 303)
 
