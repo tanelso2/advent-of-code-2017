@@ -24,7 +24,7 @@
 (defn particle-distance
   [{:keys [pos]}]
   (->> pos
-    (mapv #(Math/abs %))
+    (mapv (fn [^long x] (Math/abs x)))
     (apply +)))
 
 (defn do-iterations
